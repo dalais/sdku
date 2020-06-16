@@ -1,0 +1,9 @@
+.nav.items {
+    float: right;
+    padding-right: 100px;
+}
+.nav-item {
+    display: inline;
+    padding: 5px;
+    color: white;
+}
