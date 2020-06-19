@@ -1,17 +1,19 @@
 import React from "react";
-import { Provider } from "react-redux";
+import {Route, Switch} from "react-router-dom";
 
-import Counter from "../Counter";
-import store from "../../_store";
+import _home from "../_parts/_home";
+import _signup from "../_parts/_signup";
+import _admin from "../_parts/_admin";
 import '../../css/layout/MainContent.css';
 
-const MainContent = () => {
+const MainContent = props => {
     return (
         <div className="App-content">
-            Content
-            <Provider store={store}>
-                <Counter/>
-            </Provider>
+            <Switch>
+                <Route exact path={"/"} component={_home}/>
+                <Route path={"/signup"} component={_signup}/>
+                <Route path={"/admin"} component={_admin}/>
+            </Switch>
         </div>
     );
 };
