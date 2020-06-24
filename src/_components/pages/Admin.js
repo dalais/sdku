@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
@@ -7,7 +7,6 @@ import _admin from "../_parts/_admin";
 import '../../css/layout/App.css';
 
 const Admin = () => {
-
     return (
         <div className="App">
             <Header/>
