@@ -1,8 +1,10 @@
 import React from 'react';
 import axios from 'axios';
+import { useHistory } from "react-router-dom";
 
 const _login = () => {
 
+    const history = useHistory();
     const inputStyle = {
         border: '1px solid #cccccc', //цвет рамки
         borderRadius: '3px', //закругление углов (общее)
@@ -16,9 +18,9 @@ const _login = () => {
         fontSize: '15px', // Размер шрифта
         fontFamily: 'Tahoma' // Стиль шрифта
     };
-    let userData = {};
 
     const handleSubmit = (event) => {
+        let userData = {};
         event.preventDefault();
         if (event.target.email.value === '') {
             event.target.email.style.border = '1px solid red';
@@ -35,12 +37,15 @@ const _login = () => {
             axios.post(`api/auth/login`, loginDataObj)
                 .then(res => {
                     if (res.data.error === 0) {
-                        userData = res.data.data
+                        userData = res.data.data;
                     }
                     console.log(res.data);
                     console.log(userData);
                 })
 
+        }
+        if (userData !== null){
+            history.push("/admin")
         }
     };
 
