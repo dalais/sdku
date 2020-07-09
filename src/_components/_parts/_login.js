@@ -6,27 +6,36 @@ const _login = () => {
 
     const history = useHistory();
     const inputStyle = {
-        border: '1px solid #cccccc', //цвет рамки
-        borderRadius: '3px', //закругление углов (общее)
-        WebkitBorderRadius: '3px', //закругление углов (Google Chrome)
-        MozBorderRadius: '3px', //закругление углов (FireFox)
-        background: '#ffffff !important', // желательно прописывать, так как в Chrome при сохранных данных оно может быть желтым
-        outline: 'none', // удаляет обводку в браузерах хром(желтая) и сафари(синяя)
-        height: '25px', // высота на свое усмотрение
-        width: '150px', // ширина на свое усмотрение
-        color: 'darkslategray', //цвет шрифта в обычном состоянии
-        fontSize: '15px', // Размер шрифта
-        fontFamily: 'Tahoma' // Стиль шрифта
+        border: '1px solid #cccccc',
+        borderRadius: '3px',
+        WebkitBorderRadius: '3px',
+        MozBorderRadius: '3px',
+        background: '#ffffff !important',
+        outline: 'none',
+        height: '25px',
+        width: '150px',
+        color: 'darkslategray',
+        fontSize: '15px',
+        fontFamily: 'Tahoma'
     };
 
+    const errStyle = {
+        color: 'red'
+    };
+    //let userData = {};
     const handleSubmit = (event) => {
-        let userData = {};
         event.preventDefault();
         if (event.target.email.value === '') {
             event.target.email.style.border = '1px solid red';
+            setTimeout(function () {
+                document.querySelector("input[name=email]").style.border = '1px solid #cccccc';
+            },2000)
         }
         if (event.target.password.value === '') {
             event.target.password.style.border = '1px solid red';
+            setTimeout(function () {
+                document.querySelector("input[name=password]").style.border = '1px solid #cccccc';
+            },2000)
         }
         if (event.target.email.value !== '' && event.target.password.value !== '') {
             const loginDataObj = {
@@ -37,15 +46,21 @@ const _login = () => {
             axios.post(`api/auth/login`, loginDataObj)
                 .then(res => {
                     if (res.data.error === 0) {
-                        userData = res.data.data;
+                        //userData = res.data.data;
+                        history.push("/admin")
                     }
-                    console.log(res.data);
-                    console.log(userData);
+                    if (res.data.error > 0) {
+                        let err = document.getElementsByClassName("login-error")[0];
+                        document.querySelector("input[name=email]").value = '';
+                        document.querySelector("input[name=password]").value = '';
+                        document.querySelector("input[name=remember_me]").checked = false;
+                        err.innerText = res.data.err_mesgs[0].error;
+                        setTimeout(function () {
+                            err.innerText = "";
+                        }, 3000)
+                    }
                 })
 
-        }
-        if (userData !== null){
-            history.push("/admin")
         }
     };
 
@@ -56,30 +71,33 @@ const _login = () => {
         }
     };
 
-    const email = (
+    const Email = (
         <input type="text" name="email" style={inputStyle} onInput={onInput} placeholder="email"/>
     );
-    const password = (
+    const Password = (
         <input type="password" name="password" style={inputStyle} onInput={onInput} placeholder="password"/>
     );
-    const rememberMe = (
+    const RememberMe = (
         <input type="checkbox" name="remember_me"/>
     );
-    const btn = (<button type="submit">Log In</button>);
+    const SubmitBtn = (<button type="submit">Log In</button>);
+    const Err = (<span className="login-error" style={errStyle}/>);
+    const ErrDiv = (<div>&nbsp;{Err}</div>);
 
-
-    const loginForm = (
+    const LoginForm = (
         <form onSubmit={handleSubmit}>
-            {email}
+            {ErrDiv}
+            <br/>
+            {Email}
             <br/>
             <br/>
-            {password}
+            {Password}
             <br/>
             <br/>
-            Remember Me: {rememberMe}
+            Remember Me: {RememberMe}
             <br/>
             <br/>
-            {btn}
+            {SubmitBtn}
         </form>
     );
 
@@ -87,9 +105,7 @@ const _login = () => {
     return (
         <div className="log-in">
             <h1>Login</h1>
-            <br/>
-            <br/>
-            {loginForm}
+            {LoginForm}
         </div>
     );
 };
