@@ -27,15 +27,15 @@ const _login = () => {
         event.preventDefault();
         if (event.target.email.value === '') {
             event.target.email.style.border = '1px solid red';
-            setTimeout(function () {
-                document.querySelector("input[name=email]").style.border = '1px solid #cccccc';
-            },2000)
+            setTimeout(() =>
+                document.querySelector("input[name=email]").style.border = '1px solid #cccccc',
+                2000)
         }
         if (event.target.password.value === '') {
             event.target.password.style.border = '1px solid red';
-            setTimeout(function () {
-                document.querySelector("input[name=password]").style.border = '1px solid #cccccc';
-            },2000)
+            setTimeout(() =>
+                document.querySelector("input[name=password]").style.border = '1px solid #cccccc',
+                2000)
         }
         if (event.target.email.value !== '' && event.target.password.value !== '') {
             const loginDataObj = {
@@ -55,9 +55,7 @@ const _login = () => {
                         document.querySelector("input[name=password]").value = '';
                         document.querySelector("input[name=remember_me]").checked = false;
                         err.innerText = res.data.err_mesgs[0].error;
-                        setTimeout(function () {
-                            err.innerText = "";
-                        }, 3000)
+                        setTimeout(()=>err.innerText = "", 3000)
                     }
                 })
 
