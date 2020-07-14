@@ -1,12 +1,10 @@
 import React from "react";
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 
 import Header from "./layout/Header";
 import MainContent from "./layout/MainContent";
 import Footer from "./layout/Footer";
-import "./../css/layout/App.css"
-
-import auth from "../redux/_reducers/auth"
+import "./../css/layout/App.css";
 
 const App = () => {
     return (
@@ -18,13 +16,16 @@ const App = () => {
     );
 };
 
-export default connect(
-    state => ({
-        auth: state.auth
-    }),
-    dispatch => ({
-        auth: () => {
-            dispatch({type: "AUTH", payload: auth()})
+
+const mapDispatchToProps = {
+    onAuthAction: () => {
+        return {
+            type: 'AUTH'
         }
-    })
+    },
+};
+
+export default connect(
+    null,
+    mapDispatchToProps
 )(App);

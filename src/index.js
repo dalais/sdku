@@ -1,13 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {Provider} from "react-redux";
+import {BrowserRouter as Router} from "react-router-dom";
+import * as serviceWorker from './serviceWorker';
+import store from "./store";
+import axios from "axios";
 
 import './css/index.css';
-import Root from "./_components/Root";
-import * as serviceWorker from './serviceWorker';
+import App from "./_components/App";
+
+axios.defaults.baseURL = 'http://localhost:8000';
 
 ReactDOM.render(
   <React.StrictMode>
-      <Root/>
+      <Provider store={store}>>
+          <Router>
+              <App/>
+          </Router>
+      </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

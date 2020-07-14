@@ -43,7 +43,7 @@ const _login = () => {
                 password: event.target.password.value,
                 remember_me: event.target.remember_me.checked
             };
-            axios.post(`api/auth/login`, loginDataObj)
+            axios.post('/api/auth/login', loginDataObj)
                 .then(res => {
                     if (res.data.error === 0) {
                         //userData = res.data.data;

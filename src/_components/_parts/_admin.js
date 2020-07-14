@@ -7,7 +7,7 @@ const _admin = () => {
 
     const getFoods = async () => {
         try {
-            const { data } = await axios.get(`/api/products`);
+            const { data } = await axios.get("/api/products");
             setFoods(data);
             setFetchError(null);
         } catch (err) {
