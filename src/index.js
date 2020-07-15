@@ -15,7 +15,7 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
 } else {
     backendUrl = process.env.REACT_APP_BACKEND_HOST;
 }
-export const instAxios = axios.create({
+export const iAx = axios.create({
     baseURL: backendUrl+'/api/',
     withCredentials: true
 });
