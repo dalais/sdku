@@ -9,7 +9,16 @@ import axios from "axios";
 import './css/index.css';
 import App from "./_components/App";
 
-axios.defaults.baseURL = 'http://localhost:8000';
+let backendUrl = '';
+if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+    backendUrl = process.env.REACT_APP_BACKEND_DEV_HOST
+} else {
+    backendUrl = process.env.REACT_APP_BACKEND_HOST;
+}
+export const instAxios = axios.create({
+    baseURL: backendUrl+'/api/',
+    withCredentials: true
+});
 
 ReactDOM.render(
   <React.StrictMode>

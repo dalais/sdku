@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import axios from "axios";
+
+import {instAxios} from "../../index";
 
 const _admin = () => {
     const [foods, setFoods] = useState([]);
@@ -7,7 +8,7 @@ const _admin = () => {
 
     const getFoods = async () => {
         try {
-            const { data } = await axios.get("/api/products");
+            const { data } = await instAxios.get("products");
             setFoods(data);
             setFetchError(null);
         } catch (err) {

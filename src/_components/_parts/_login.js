@@ -1,6 +1,6 @@
 import React from 'react';
-import axios from 'axios';
 import { useHistory } from "react-router-dom";
+import {instAxios} from "../../index";
 
 const _login = () => {
 
@@ -43,7 +43,7 @@ const _login = () => {
                 password: event.target.password.value,
                 remember_me: event.target.remember_me.checked
             };
-            axios.post('/api/auth/login', loginDataObj)
+            instAxios.post('auth/login', loginDataObj, {crossDomain: true})
                 .then(res => {
                     if (res.data.error === 0) {
                         //userData = res.data.data;
