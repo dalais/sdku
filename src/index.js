@@ -8,6 +8,7 @@ import axios from "axios";
 
 import './css/index.css';
 import App from "./_components/App";
+import authAction from "./store/auth/actions";
 
 let backendUrl = '';
 if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
@@ -17,6 +18,14 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
 export const iAx = axios.create({
     baseURL: backendUrl+'/api/',
     withCredentials: true
+});
+iAx.post('auth/session', {})
+    .then(res => {
+        store.dispatch(authAction(res.data))
+    });
+store.subscribe(() => {
+    iAx.defaults.headers.common["X-CSRF-Token"] = store.getState().auth.auth.csrf;
+    iAx.defaults.headers.common["Authorization"] = "Bearer "+store.getState().auth.auth.token;
 });
 
 ReactDOM.render(

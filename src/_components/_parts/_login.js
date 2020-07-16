@@ -1,6 +1,8 @@
 import React from 'react';
 import { useHistory } from "react-router-dom";
 import {iAx} from "../../index";
+import store from "../../store";
+import authAction from "../../store/auth/actions";
 
 const _login = () => {
 
@@ -22,7 +24,7 @@ const _login = () => {
     const errStyle = {
         color: 'red'
     };
-    //let userData = {};
+
     const handleSubmit = (event) => {
         event.preventDefault();
         if (event.target.email.value === '') {
@@ -43,10 +45,10 @@ const _login = () => {
                 password: event.target.password.value,
                 remember_me: event.target.remember_me.checked
             };
-            iAx.post('auth/login', loginDataObj, {crossDomain: true})
+            iAx.post('auth/login', loginDataObj)
                 .then(res => {
                     if (res.data.error === 0) {
-                        //userData = res.data.data;
+                        store.dispatch(authAction(res.data.data[1]));
                         history.push("/admin")
                     }
                     if (res.data.error > 0) {
@@ -58,7 +60,6 @@ const _login = () => {
                         setTimeout(()=>err.innerText = "", 3000)
                     }
                 })
-
         }
     };
 
@@ -98,8 +99,6 @@ const _login = () => {
             {SubmitBtn}
         </form>
     );
-
-
     return (
         <div className="log-in">
             <h1>Login</h1>
