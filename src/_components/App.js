@@ -6,6 +6,7 @@ import MainContent from "./layout/MainContent";
 import Footer from "./layout/Footer";
 import "./../css/layout/App.css";
 
+
 const App = () => {
     return (
         <div className="App">
