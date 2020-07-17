@@ -1,13 +1,13 @@
 import React from 'react';
 import '../../css/layout/Header.css';
 import Logo from "./Logo";
-import Navbar from "./Navbar";
+import NavbarContainer from "./Navbar";
 
 const Header = () => {
     return (
             <header className="App-header">
                 <Logo/>
-                <Navbar />
+                <NavbarContainer />
             </header>
     );
 };

@@ -14,9 +14,8 @@ let backendUrl = '';
 if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
     backendUrl = process.env.REACT_APP_BACKEND_DEV_HOST
 }
-
 export const iAx = axios.create({
-    baseURL: backendUrl+'/api/',
+    baseURL: backendUrl + '/api/',
     withCredentials: true
 });
 iAx.post('auth/session', {})
@@ -24,19 +23,17 @@ iAx.post('auth/session', {})
         store.dispatch(authAction(res.data))
     });
 store.subscribe(() => {
-    iAx.defaults.headers.common["X-CSRF-Token"] = store.getState().auth.auth.csrf;
-    iAx.defaults.headers.common["Authorization"] = "Bearer "+store.getState().auth.auth.token;
+    iAx.defaults.headers.common["X-CSRF-Token"] = store.getState().authReducer.auth.csrf;
+    iAx.defaults.headers.common["Authorization"] = "Bearer " + store.getState().authReducer.auth.token;
 });
 
 ReactDOM.render(
-  <React.StrictMode>
-      <Provider store={store}>>
-          <Router>
-              <App/>
-          </Router>
-      </Provider>
-  </React.StrictMode>,
-  document.getElementById('root')
+        <Provider store={store}>
+            <Router>
+                <App/>
+            </Router>
+        </Provider>,
+    document.getElementById('root')
 );
 
 // If you want your app to work offline and load faster, you can change

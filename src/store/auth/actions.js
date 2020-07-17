@@ -1,10 +1,5 @@
 export const AUTH = 'AUTH';
 
-const authAction = userData => {
-    return {
-        type: AUTH,
-        payload: userData
-    }
-};
-
-export default authAction;
+export default function authAction(payload) {
+    return {type: AUTH, payload}
+}

@@ -48,7 +48,7 @@ const _login = () => {
             iAx.post('auth/login', loginDataObj)
                 .then(res => {
                     if (res.data.error === 0) {
-                        store.dispatch(authAction(res.data.data[1]));
+                        store.dispatch(authAction(res.data.data));
                         history.push("/admin")
                     }
                     if (res.data.error > 0) {
