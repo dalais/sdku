@@ -23,8 +23,8 @@ iAx.post('auth/session', {})
         store.dispatch(authAction(res.data))
     });
 store.subscribe(() => {
-    iAx.defaults.headers.common["X-CSRF-Token"] = store.getState().authReducer.auth.csrf;
-    iAx.defaults.headers.common["Authorization"] = "Bearer " + store.getState().authReducer.auth.token;
+    iAx.defaults.headers.common["X-CSRF-Token"] = store.getState().auth.csrf;
+    iAx.defaults.headers.common["Authorization"] = "Bearer " + store.getState().auth.token;
 });
 
 ReactDOM.render(
