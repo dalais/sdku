@@ -19,7 +19,7 @@ export const iAx = axios.create({
     withCredentials: true
 });
 
-iAx.post(backendUrl + '/api/auth/session', {})
+iAx.post('auth/session', {})
     .then(res => {
         store.dispatch(authAction(res.data));
     });
