@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 
 import {iAx} from "../../index";
 
-const _admin = () => {
+const Admin = () => {
     const [foods, setFoods] = useState([]);
     const [fetchError, setFetchError] = useState(null);
 
@@ -36,4 +36,4 @@ const _admin = () => {
     );
 };
 
-export default _admin;
+export default Admin;

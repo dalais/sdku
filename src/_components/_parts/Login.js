@@ -4,7 +4,7 @@ import {iAx} from "../../index";
 import store from "../../store";
 import authAction from "../../store/auth/actions";
 
-const _login = () => {
+const Login = () => {
 
     const history = useHistory();
     const inputStyle = {
@@ -107,4 +107,4 @@ const _login = () => {
     );
 };
 
-export default _login;
+export default Login;

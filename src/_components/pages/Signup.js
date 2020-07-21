@@ -3,14 +3,14 @@ import React from 'react';
 import Header from "./../layout/Header";
 import Footer from "./../layout/Footer";
 import MainContent from "./../layout/MainContent";
-import _signup from "../_parts/_signup";
+import signup from "../_parts/_signup";
 
 const Signup = () => {
 
     return (
         <div className="App">
             <Header/>
-            <MainContent inner={_signup}/>
+            <MainContent inner={signup}/>
             <Footer/>
         </div>
     );

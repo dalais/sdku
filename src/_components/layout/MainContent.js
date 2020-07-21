@@ -1,10 +1,11 @@
 import React from "react";
-import {Route, Switch} from "react-router-dom";
+import {Route, Switch, Redirect} from "react-router-dom";
+import {connect} from "react-redux";
 
-import _home from "../_parts/_home";
-import _signup from "../_parts/_signup";
-import _login from "../_parts/_login";
-import _admin from "../_parts/_admin";
+import Home from "../_parts/Home";
+import Signup from "../_parts/Signup";
+import Login from "../_parts/Login";
+import Admin from "../_parts/Admin";
 import '../../css/layout/MainContent.css';
 import NotFound from "../pages/NotFound";
 
@@ -12,14 +13,25 @@ const MainContent = props => {
     return (
         <div className="App-content">
             <Switch>
-                <Route exact path={"/"} component={_home}/>
-                <Route path={"/signup"} component={_signup}/>
-                <Route path={"/login"} component={_login}/>
-                <Route path={"/admin"} component={_admin}/>
+                <Route exact path={"/"} component={Home}/>
+                <Route path="/signup" render={() => (
+                    props.is_logged ? (<Redirect to="/"/>) : (<Signup/>)
+                )}/>
+                <Route path="/login" render={() => (
+                    props.is_logged ? (<Redirect to="/"/>) : (<Login/>)
+                )}/>
+                <Route path="/admin" render={() => (
+                    props.is_logged ? (<Admin/>) : (<Redirect to="/login"/>)
+                )}/>
+                <Route path="/logout" render={() => (
+                    (<Redirect to="/"/>)
+                )}/>
                 <Route path={"/not-found"} component={NotFound}/>
             </Switch>
         </div>
     );
 };
 
-export default MainContent;
+const mapStateToProps = state => state.authReducer.auth;
+
+export default connect(mapStateToProps)(MainContent);
