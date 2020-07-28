@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import {connect} from "react-redux";
 
 import Header from "./layout/Header";
 import MainContent from "./layout/MainContent";
@@ -16,4 +17,7 @@ class App extends Component {
         );
     }
 }
-export default App;
+
+const mapStateToProps = state => state;
+
+export default connect(mapStateToProps)(App);

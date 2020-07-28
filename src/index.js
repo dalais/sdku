@@ -4,6 +4,8 @@ import {Provider} from "react-redux";
 import {BrowserRouter as Router} from "react-router-dom";
 import * as serviceWorker from './serviceWorker';
 import store from "./store";
+import persistor from "./store/persistor";
+import {PersistGate} from 'redux-persist/integration/react'
 import axios from "axios";
 
 import './css/index.css';
@@ -22,20 +24,30 @@ export const iAx = axios.create({
 iAx.post('auth/session', {})
     .then(res => {
         store.dispatch(authAction(res.data));
+    })
+    .catch(() => {
+        store.dispatch(authAction({
+            is_logged:false,
+            user_id:0,
+            role:0,
+            token:"",
+            csrf:""
+        }));
     });
 store.subscribe(() => {
     iAx.defaults.headers.common["X-CSRF-Token"] = store.getState().authReducer.auth.csrf;
     iAx.defaults.headers.common["Authorization"] = "Bearer " + store.getState().authReducer.auth.token;
-    let auth = store.getState().authReducer.auth;
-    ReactDOM.render(
-        <Provider store={store}>
-            <Router>
-                <App auth={auth}/>
-            </Router>
-        </Provider>,
-        document.getElementById('root')
-    );
 });
+ReactDOM.render(
+    <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+            <Router>
+                <App/>
+            </Router>
+        </PersistGate>
+    </Provider>,
+    document.getElementById('root')
+);
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA

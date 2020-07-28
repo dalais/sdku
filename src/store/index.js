@@ -1,18 +1,49 @@
 import {applyMiddleware, combineReducers, compose, createStore} from "redux";
-import authReducer from "./auth/reducers";
 import thunk from "redux-thunk";
+import { persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import createEncryptor from 'redux-persist-transform-encrypt';
 
-const composeEnhancers =
+import authReducer from "./auth/reducers";
+
+let composeEnhancers;
+
+let devComposeEnhancers =
     typeof window === 'object' &&
     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
         window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({ trace: true, traceLimit: 25 }) : compose;
+
+let prodComposeEnhancers = compose;
+
+if (process.env.NODE_ENV === 'development') {
+    composeEnhancers = devComposeEnhancers
+} else {
+    composeEnhancers = prodComposeEnhancers
+}
+
+const encryptor = createEncryptor({
+    secretKey: process.env.REACT_APP_KEY,
+    onError: function(error) {
+        console.log(error)
+    }
+});
+
+const persistConfig = {
+    key: 'root',
+    storage: storage,
+    transforms: [encryptor]
+};
 
 const rootReducer = combineReducers({
     authReducer
 });
 
-let store = createStore(rootReducer, composeEnhancers(
+const persistedReducer = persistReducer(
+    persistConfig,
+    rootReducer
+);
+let store = createStore(persistedReducer, composeEnhancers(
     applyMiddleware(thunk)
 ));
 
-export default store;
+export default store
