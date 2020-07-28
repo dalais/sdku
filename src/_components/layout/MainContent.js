@@ -36,6 +36,6 @@ const MainContent = props => {
     );
 };
 
-const mapStateToProps = state => state.authReducer.auth;
+const mapStateToProps = state => state.root.auth;
 
 export default connect(mapStateToProps)(MainContent);
