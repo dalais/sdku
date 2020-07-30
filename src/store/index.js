@@ -8,9 +8,9 @@ import authReducer from "./auth/reducers";
 
 const isProduction = process.env.NODE_ENV === 'production';
 const composeEnhancers =
-    !isProduction
-        ? (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({ trace: true, traceLimit: 25 }) || compose)
-        : compose;
+    isProduction
+        ? compose
+        : (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({ trace: true, traceLimit: 25 }) || compose);
 
 const encryptor = createEncryptor({
     secretKey: process.env.REACT_APP_KEY,
