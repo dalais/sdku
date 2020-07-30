@@ -6,20 +6,8 @@ import createEncryptor from 'redux-persist-transform-encrypt';
 
 import authReducer from "./auth/reducers";
 
-let composeEnhancers;
-
-let devComposeEnhancers =
-    typeof window === 'object' &&
-    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
-        window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({ trace: true, traceLimit: 25 }) : compose;
-
-let prodComposeEnhancers = compose;
-
-if (process.env.NODE_ENV === 'development') {
-    composeEnhancers = devComposeEnhancers
-} else {
-    composeEnhancers = prodComposeEnhancers
-}
+const composeEnhancers = !process.env.NODE_ENV === 'production'
+    ? (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose) : compose;
 
 const encryptor = createEncryptor({
     secretKey: process.env.REACT_APP_KEY,
@@ -42,6 +30,7 @@ const persistedReducer = persistReducer(
     persistConfig,
     rootReducer
 );
+
 let store = createStore(persistedReducer, composeEnhancers(
     applyMiddleware(thunk)
 ));
