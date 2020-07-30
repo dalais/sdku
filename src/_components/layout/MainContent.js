@@ -36,6 +36,6 @@ const MainContent = props => {
     );
 };
 
-const mapStateToProps = state => state.root.auth;
+const mapStateToProps = state => state.auth;
 
 export default connect(mapStateToProps)(MainContent);

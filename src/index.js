@@ -24,19 +24,17 @@ export const iAx = axios.create({
 iAx.post('auth/session', {})
     .then(res => {
         store.dispatch(authAction(res.data));
-    })
-    .catch(() => {
-        store.dispatch(authAction({
-            is_logged:false,
-            user_id:0,
-            role:0,
-            token:"",
-            csrf:""
-        }));
     });
+
 store.subscribe(() => {
-    iAx.defaults.headers.common["X-CSRF-Token"] = store.getState().root.auth.csrf;
-    iAx.defaults.headers.common["Authorization"] = "Bearer " + store.getState().root.auth.token;
+    iAx.defaults.headers.common["X-CSRF-Token"] =
+        (store.getState().auth.csrf)
+            ? store.getState().auth.csrf
+            : '';
+    iAx.defaults.headers.common["Authorization"] =
+        (store.getState().auth.token)
+            ? "Bearer " + store.getState().auth.token
+            : '';
 });
 ReactDOM.render(
     <Provider store={store}>
