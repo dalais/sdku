@@ -1,7 +1,4 @@
-const initialState = null;
-
-
-const authReducer = (state = initialState, action) => {
+const authReducer = (state = {auth:null}, action) => {
     switch (action.type) {
         case 'AUTH':
             return state.auth = action.payload;

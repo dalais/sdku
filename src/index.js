@@ -27,14 +27,16 @@ iAx.post('auth/session', {})
     });
 
 store.subscribe(() => {
-    iAx.defaults.headers.common["X-CSRF-Token"] =
-        (store.getState().auth.csrf)
-            ? store.getState().auth.csrf
+    let csrf =
+        (store.getState().auth !== null  && store.getState().auth.csrf !== undefined)
+        ? store.getState().auth.csrf
             : '';
-    iAx.defaults.headers.common["Authorization"] =
-        (store.getState().auth.token)
+    let token =
+        (store.getState().auth !== null && store.getState().auth.token !== undefined)
             ? "Bearer " + store.getState().auth.token
             : '';
+    iAx.defaults.headers.common["X-CSRF-Token"] = csrf;
+    iAx.defaults.headers.common["Authorization"] = token;
 });
 ReactDOM.render(
     <Provider store={store}>
