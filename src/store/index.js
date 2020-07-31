@@ -20,7 +20,8 @@ const encryptor = createEncryptor({
 });
 
 const persistConfig = {
-    key: 'sdku',
+    keyPrefix: 'sdku',
+    key: '_',
     storage: storage,
     transforms: [encryptor]
 };

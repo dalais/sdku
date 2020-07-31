@@ -28,7 +28,7 @@ const Navbar = (props) => {
         return null;
     };
     const LoginBtn = () => {
-        if ( props.is_logged !== undefined && !props.is_logged) {
+        if (!props.is_logged) {
             return (
                 <li className="nav-item">
                     <Link to="/login">Login</Link>
@@ -38,7 +38,7 @@ const Navbar = (props) => {
         return null;
     };
     const SigninBtn = () => {
-        if ( props.is_logged !== undefined && !props.is_logged) {
+        if (!props.is_logged) {
             return (
                 <li className="nav-item">
                     <Link to="/signup">Signup</Link>
