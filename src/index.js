@@ -28,12 +28,12 @@ iAx.post('auth/session', {})
 
 store.subscribe(() => {
     let csrf =
-        (store.getState().auth !== null  && store.getState().auth.csrf !== undefined)
-        ? store.getState().auth.csrf
+        (store.getState().base !== null  && store.getState().base.csrf !== undefined)
+        ? store.getState().base.csrf
             : '';
     let token =
-        (store.getState().auth !== null && store.getState().auth.token !== undefined)
-            ? "Bearer " + store.getState().auth.token
+        (store.getState().base !== null && store.getState().base.token !== undefined)
+            ? "Bearer " + store.getState().base.token
             : '';
     iAx.defaults.headers.common["X-CSRF-Token"] = csrf;
     iAx.defaults.headers.common["Authorization"] = token;

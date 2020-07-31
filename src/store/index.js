@@ -20,14 +20,14 @@ const encryptor = createEncryptor({
 });
 
 const persistConfig = {
-    key: 'root',
+    key: 'sdku',
     storage: storage,
     transforms: [encryptor]
 };
 
 
 const rootReducer = combineReducers({
-    auth: authReducer
+    base: authReducer
 });
 
 const persistedReducer = persistReducer(

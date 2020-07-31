@@ -73,7 +73,7 @@ const Navbar = (props) => {
     );
 };
 
-const mapStateToProps = state => state.auth;
+const mapStateToProps = state => state.base;
 
 const NavbarContainer = connect(
     mapStateToProps
