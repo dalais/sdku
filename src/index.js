@@ -11,6 +11,7 @@ import axios from "axios";
 import './css/index.css';
 import App from "./_components/App";
 import authAction from "./store/rootSt/auth/actions";
+import MainError from "./_components/errors/MainError";
 
 let backendUrl = '';
 if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
@@ -26,29 +27,37 @@ iAx.post('auth/session', {})
         store.dispatch(authAction(res.data));
         return res.data;
     }).then(auth => {
-        let csrf =
-            (auth !== null && auth.csrf !== undefined)
-                ? auth.csrf
-                : '';
-        let token =
-            (auth !== null && auth.token !== undefined)
-                ? "Bearer " + auth.token
-                : '';
-        iAx.defaults.headers.common["X-CSRF-Token"] = csrf;
-        iAx.defaults.headers.common["Authorization"] = token;
+    let csrf =
+        (auth !== null && auth.csrf !== undefined)
+            ? auth.csrf
+            : '';
+    let token =
+        (auth !== null && auth.token !== undefined)
+            ? "Bearer " + auth.token
+            : '';
+    iAx.defaults.headers.common["X-CSRF-Token"] = csrf;
+    iAx.defaults.headers.common["Authorization"] = token;
+    ReactDOM.render(
+        <Provider store={store}>
+            <PersistGate loading={null} persistor={persistor}>
+                <Router>
+                    <App/>
+                </Router>
+            </PersistGate>
+        </Provider>,
+        document.getElementById('root')
+    )
+}).catch(error => {
+    if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+        throw new Error(error)
+    }
+    if (process.env.NODE_ENV === 'production') {
+
         ReactDOM.render(
-            <Provider store={store}>
-                <PersistGate loading={null} persistor={persistor}>
-                    <Router>
-                        <App/>
-                    </Router>
-                </PersistGate>
-            </Provider>,
+            <MainError/>,
             document.getElementById('root')
         )
     }
-).catch(error => {
-    throw new Error(error)
 });
 
 // If you want your app to work offline and load faster, you can change

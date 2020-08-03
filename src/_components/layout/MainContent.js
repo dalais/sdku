@@ -7,7 +7,7 @@ import Signup from "../_parts/Signup";
 import Login from "../_parts/Login";
 import Admin from "../_parts/Admin";
 import '../../css/layout/MainContent.css';
-import NotFound from "../pages/NotFound";
+import NotFound from "../errors/NotFound";
 import Greeting from "../_parts/Greeting";
 
 const MainContent = () => {
