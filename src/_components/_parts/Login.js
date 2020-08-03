@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from "react-router-dom";
 import {iAx} from "../../index";
 import store from "../../store";
-import authAction from "../../store/auth/actions";
+import authAction from "../../store/rootSt/auth/actions";
 
 const Login = () => {
 

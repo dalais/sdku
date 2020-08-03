@@ -10,7 +10,7 @@ import axios from "axios";
 
 import './css/index.css';
 import App from "./_components/App";
-import authAction from "./store/auth/actions";
+import authAction from "./store/rootSt/auth/actions";
 
 let backendUrl = '';
 if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
@@ -26,18 +26,6 @@ iAx.post('auth/session', {})
         store.dispatch(authAction(res.data));
     });
 
-store.subscribe(() => {
-    let csrf =
-        (store.getState().base !== null  && store.getState().base.csrf !== undefined)
-        ? store.getState().base.csrf
-            : '';
-    let token =
-        (store.getState().base !== null && store.getState().base.token !== undefined)
-            ? "Bearer " + store.getState().base.token
-            : '';
-    iAx.defaults.headers.common["X-CSRF-Token"] = csrf;
-    iAx.defaults.headers.common["Authorization"] = token;
-});
 ReactDOM.render(
     <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>

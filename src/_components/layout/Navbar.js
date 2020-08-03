@@ -1,12 +1,13 @@
 import React from "react";
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {Link, useHistory} from "react-router-dom";
 import '../../css/layout/Navbar.css';
 import {iAx} from "../../index";
 import store from "../../store";
-import authAction from "../../store/auth/actions";
+import authAction from "../../store/rootSt/auth/actions";
 
-const Navbar = (props) => {
+const Navbar = () => {
+    const user = useSelector(state => state.auth);
     const history = useHistory();
 
     const logout = () => {
@@ -18,7 +19,7 @@ const Navbar = (props) => {
     };
 
     const AdminBtn = () => {
-        if ( props.is_logged !== undefined && props.is_logged) {
+        if ( user.is_logged !== undefined && user.is_logged) {
             return (
                 <li className="nav-item">
                     <Link to="/admin">Admin</Link>
@@ -28,7 +29,7 @@ const Navbar = (props) => {
         return null;
     };
     const LoginBtn = () => {
-        if (!props.is_logged) {
+        if ( user.is_logged !== undefined && !user.is_logged) {
             return (
                 <li className="nav-item">
                     <Link to="/login">Login</Link>
@@ -38,7 +39,7 @@ const Navbar = (props) => {
         return null;
     };
     const SigninBtn = () => {
-        if (!props.is_logged) {
+        if (!user.is_logged) {
             return (
                 <li className="nav-item">
                     <Link to="/signup">Signup</Link>
@@ -48,7 +49,7 @@ const Navbar = (props) => {
         return null;
     };
     const LogoutBtn = () => {
-        if (props.is_logged) {
+        if (user.is_logged) {
             return (
                 <li className="nav-item" onClick={logout}>
                     <Link to="/logout">Logout</Link>
@@ -73,10 +74,4 @@ const Navbar = (props) => {
     );
 };
 
-const mapStateToProps = state => state.base;
-
-const NavbarContainer = connect(
-    mapStateToProps
-)(Navbar);
-
-export default NavbarContainer;
+export default Navbar;

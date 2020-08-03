@@ -2,9 +2,12 @@ import {applyMiddleware, combineReducers, compose, createStore} from "redux";
 import thunk from "redux-thunk";
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import session from 'redux-persist/lib/storage/session';
 import createEncryptor from 'redux-persist-transform-encrypt';
 
-import authReducer from "./auth/reducers";
+import authReducer from "./rootSt/auth/reducers";
+import {localReducer} from "./localSt/example";
+import {sessionReducer} from "./sessionSt/example";
 
 const isProduction = process.env.NODE_ENV === 'production';
 const composeEnhancers =
@@ -19,24 +22,34 @@ const encryptor = createEncryptor({
     }
 });
 
-const persistConfig = {
-    keyPrefix: 'sdku',
-    key: '_',
+const localPersistConfig = {
+    keyPrefix: '_',
+    key: 'lst',
     storage: storage,
+    transforms: [encryptor]
+};
+
+const sessionPersistConfig = {
+    keyPrefix: '_',
+    key: 'sst',
+    storage: session,
     transforms: [encryptor]
 };
 
 
 const rootReducer = combineReducers({
-    base: authReducer
+    // not persisted state
+    auth: authReducer,
+
+    // state in localStorage
+    base: persistReducer(localPersistConfig, localReducer),
+
+    // state in sessionStorage
+    sst: persistReducer(sessionPersistConfig,sessionReducer),
+
 });
 
-const persistedReducer = persistReducer(
-    persistConfig,
-    rootReducer
-);
-
-let store = createStore(persistedReducer, composeEnhancers(
+let store = createStore(rootReducer, composeEnhancers(
     applyMiddleware(thunk)
 ));
 

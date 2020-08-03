@@ -1,7 +1,7 @@
-const authReducer = (state = {base:null}, action) => {
+const authReducer = (state = {}, action) => {
     switch (action.type) {
         case 'AUTH':
-            return state.base = action.payload;
+            return state = action.payload;
         default:
             return state;
     }

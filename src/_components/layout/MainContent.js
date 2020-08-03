@@ -1,6 +1,6 @@
 import React from "react";
 import {Route, Switch, Redirect} from "react-router-dom";
-import {connect} from "react-redux";
+import {useSelector} from "react-redux";
 
 import Home from "../_parts/Home";
 import Signup from "../_parts/Signup";
@@ -10,19 +10,20 @@ import '../../css/layout/MainContent.css';
 import NotFound from "../pages/NotFound";
 import Greeting from "../_parts/Greeting";
 
-const MainContent = props => {
+const MainContent = () => {
+    const user = useSelector(state => state.auth);
     return (
         <div className="App-content">
             <Switch>
                 <Route exact path={"/"} component={Home}/>
                 <Route path="/signup" render={() => (
-                    props.is_logged ? (<Redirect to="/"/>) : (<Signup/>)
+                    user.is_logged ? (<Redirect to="/"/>) : (<Signup/>)
                 )}/>
                 <Route path="/login" render={() => (
-                    props.is_logged ? (<Redirect to="/"/>) : (<Login/>)
+                    user.is_logged ? (<Redirect to="/"/>) : (<Login/>)
                 )}/>
                 <Route path="/admin" render={() => (
-                    props.is_logged ? (<Admin/>) : (<Redirect to="/login"/>)
+                    user.is_logged ? (<Admin/>) : (<Redirect to="/login"/>)
                 )}/>
                 <Route path="/logout" render={() => (
                     (<Redirect to="/"/>)
@@ -36,6 +37,4 @@ const MainContent = props => {
     );
 };
 
-const mapStateToProps = state => state.base;
-
-export default connect(mapStateToProps)(MainContent);
+export default MainContent;
