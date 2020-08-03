@@ -22,9 +22,13 @@ const MainContent = () => {
                 <Route path="/login" render={() => (
                     user.is_logged ? (<Redirect to="/"/>) : (<Login/>)
                 )}/>
-                <Route path="/admin" render={() => (
-                    user.is_logged ? (<Admin/>) : (<Redirect to="/login"/>)
-                )}/>
+                <Route path="/admin" render={() => {
+                    if (user.is_logged) {
+                        return <Admin/>
+                    } else {
+                        return <Redirect to="/login" />
+                    }
+                }}/>
                 <Route path="/logout" render={() => (
                     (<Redirect to="/"/>)
                 )}/>
