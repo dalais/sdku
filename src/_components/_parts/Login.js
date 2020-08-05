@@ -14,10 +14,10 @@ const Login = () => {
         MozBorderRadius: '3px',
         background: '#ffffff !important',
         outline: 'none',
-        height: '25px',
-        width: '150px',
+        height: '30px',
+        width: '200px',
         color: 'darkslategray',
-        fontSize: '15px',
+        fontSize: '20px',
         fontFamily: 'Tahoma'
     };
 
