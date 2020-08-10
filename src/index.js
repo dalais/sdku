@@ -10,7 +10,6 @@ import axios from "axios";
 
 import './css/index.css';
 import App from "./_components/App";
-import MainError from "./_components/errors/MainError";
 import authAction from "./store/rootSt/auth/actions";
 
 let backendUrl = '';
@@ -36,7 +35,7 @@ const Authentication = () => {
     if (session) {
         return <App/>;
     }
-    return <MainError/>;
+    return null;
 };
 
 ReactDOM.render(
