@@ -12,7 +12,7 @@ import Greeting from "../_parts/Greeting";
 
 const MainContent = () => {
     const user = useSelector(state => state.auth);
-    console.log(user);
+
     return (
         <div className="App-content">
             <Switch>
